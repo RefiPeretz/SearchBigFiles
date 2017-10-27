@@ -4,14 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- *  The {@code RabinKarp} class finds the first occurrence of a pattern string
- *  in a text string.
- *  <p>
- *  This implementation uses the Rabin-Karp algorithm.
- *  <p>
- *  For additional documentation,
- *  see <a href="https://algs4.cs.princeton.edu/53substring">Section 5.3</a> of
- *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ *  This class implement RabinKarp search algorithm with little modification to multiple occurrences search
  */
 public class RabinKarp {
     private String pat;      // the pattern  // needed only for Las Vegas
@@ -52,7 +45,12 @@ public class RabinKarp {
         patHash = hash(pat, m);
     }
 
-    // Compute hash for key[0..m-1]. 
+    /**
+     * Compute hash for key[0..m-1].
+     * @param key
+     * @param m
+     * @return
+     */
     private long hash(String key, int m) {
         long h = 0;
         for (int j = 0; j < m; j++)
@@ -60,7 +58,12 @@ public class RabinKarp {
         return h;
     }
 
-    // Las Vegas version: does pat[] match txt[i..i-m+1] ?
+    /**
+     *  Does pat[] match txt[i..i-m+1]
+     * @param txt
+     * @param i
+     * @return
+     */
     private boolean check(String txt, int i) {
         for (int j = 0; j < m; j++)
             if (pat.charAt(j) != txt.charAt(i + j))
@@ -68,18 +71,14 @@ public class RabinKarp {
         return true;
     }
 
-    // Monte Carlo version: always return true
-    // private boolean check(int i) {
-    //    return true;
-    //}
+
 
     /**
-     * Returns the index of the first occurrrence of the pattern string
+     * Returns Array of occurrences positions
      * in the text string.
      *
      * @param txt the text string
-     * @return the index of the first occurrence of the pattern string
-     * in the text string; n if no such match
+     * @return Returns Array of occurrences positions
      */
     public ArrayList<Integer> search(String txt) {
         int n = txt.length();
@@ -104,12 +103,15 @@ public class RabinKarp {
 
         }
 
-        // no match
+        // no match - return empty
         return nameIndexList;
     }
 
 
-    // a random 31-bit prime
+    /**
+     * a random 31-bit prime
+     * @return
+     */
     private static long longRandomPrime() {
         BigInteger prime = BigInteger.probablePrime(31, new Random());
         return prime.longValue();

@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+/**
+ * Matcher class. Implement multithreaded search using RabinKarp search.
+ *
+ */
 public class Matcher implements Runnable {
 
     private String name;
@@ -12,16 +16,31 @@ public class Matcher implements Runnable {
     int currentRow;
     String text;
 
+    /**
+     * Constructor
+     * @param name
+     * @param currentRow
+     * @param text
+     */
     public Matcher(String name, int currentRow, String text){
         this.name = name;
         this.threadName = name + "_thread";
-//        this.currentRow =Integer.toString(currentRow);
         this.text = text;
         this.currentRow = currentRow;
     }
+
+    /**
+     * Is the thread is done and the map was extracted.
+     * @return
+     */
     public boolean isExtract(){
         return this.isExtract;
     }
+
+    /**
+     * Set extract true or false.
+     * @param value
+     */
     public void setIsExtract(boolean value){
         this.isExtract = value;
     }
@@ -38,6 +57,7 @@ public class Matcher implements Runnable {
         //System.out.println("Running " +  threadName );
         try {
             RabinKarp searcher = new RabinKarp(this.name);
+            //List of positions
             charPos = searcher.search(this.text);
             if(!charPos.isEmpty()){
                 for(int pos : charPos){
@@ -50,7 +70,7 @@ public class Matcher implements Runnable {
         }
        // System.out.println("Thread " +  threadName + " exiting.");
     }
-
+    //Start thread
     public void start () {
         positions = new ArrayList<>();
         //System.out.println("Starting " +  threadName );
